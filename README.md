@@ -1,5 +1,5 @@
 # Scriblur
-The beginnings of a C2 framework. Except minus all the C2 stuff so far. Currently generates
+The beginnings of a C2 framework. Currently without all the C2 stuff so far. Generates
 a dual stage VBS infection vector, and a dual stage HTA infection vector. The variables take
 into account C2 addresses, Koadic/Empire payloads, and a few delivery mechanisms. The payload
 files are output to an aptly named directory "Payloads" that is created if not already present.
